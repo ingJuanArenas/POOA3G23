@@ -1,18 +1,25 @@
-## Getting Started
+## Gestión Taller POO 2
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Aplicación Java simple para gestionar un taller de mantenimiento de trenes usando principios de POO. Modela técnicos (mecánico y eléctrico), trenes, órdenes de mantenimiento y estados.
 
-## Folder Structure
+### Requisitos
+- Java 17+ (JDK)
+- Opcional: VS Code o cualquier IDE Java
 
-The workspace contains two folders by default, where:
+### Ejecutar
+Desde la raíz del proyecto:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+```bash
+javac -d bin -cp src src/Main.java
+java -cp bin Main
+```
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+### Estructura
+- `src/`: código fuente (modelos, enums, patrones y validaciones)
+- `bin/`: clases compiladas
+- `lib/`: dependencias (si aplica)
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+La vista `JAVA PROJECTS` permite gestionar dependencias. Más detalles en `https://github.com/microsoft/vscode-java-dependency#manage-dependencies`.
 
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+### Licencia
+Uso académico/educativo.
