@@ -1,4 +1,5 @@
-import excepciones.ValidacionException;
+import excepciones.NotFoundException;
+import excepciones.Validation;
 import modelo.*;
 import modelo.enums.EstadoOrden;
 import modelo.enums.TipoMantenimiento;
@@ -53,7 +54,7 @@ public class Main {
                     default:
                         System.out.println("Opción inválida");
                 }
-            } catch (ValidacionException ve) {
+            } catch (Validation ve) {
                 System.out.println("Error de validación: " + ve.getMessage());
             } catch (Exception e) {
                 System.out.println("Ocurrió un error: " + e.getMessage());
@@ -130,8 +131,7 @@ public class Main {
                 .filter(t -> t.getNumeroSerie().equalsIgnoreCase(serie))
                 .findFirst();
         if (!trenOpt.isPresent()) {
-            System.out.println("Tren no encontrado");
-            return;
+            throw new NotFoundException("Tren no encontrado");
         }
         OrdenMantenimiento orden = gestor.crearOrden(tipo, trenOpt.get());
         System.out.println("Orden creada: " + orden);
@@ -153,7 +153,7 @@ public class Main {
         long id;
         try { id = Long.parseLong(idStr); } catch (NumberFormatException ex) { System.out.println("ID inválido"); return; }
         Optional<OrdenMantenimiento> ordenOpt = gestor.getOrdenes().stream().filter(o -> o.getId() == id).findFirst();
-        if (!ordenOpt.isPresent()) { System.out.println("Orden no encontrada"); return; }
+        if (!ordenOpt.isPresent()) { throw new NotFoundException("Orden no encontrada");  }
 
         System.out.println("Técnicos:");
         for (int i = 0; i < gestor.getTecnicos().size(); i++) {
@@ -177,7 +177,7 @@ public class Main {
         long id;
         try { id = Long.parseLong(idStr); } catch (NumberFormatException ex) { System.out.println("ID inválido"); return; }
         Optional<OrdenMantenimiento> ordenOpt = gestor.getOrdenes().stream().filter(o -> o.getId() == id).findFirst();
-        if (!ordenOpt.isPresent()) { System.out.println("Orden no encontrada"); return; }
+        if (!ordenOpt.isPresent()) { throw new NotFoundException("Orden no encontrada"); }
         OrdenMantenimiento orden = ordenOpt.get();
         System.out.print("Acción (1=Iniciar, 2=Finalizar): ");
         String acc = scanner.nextLine();

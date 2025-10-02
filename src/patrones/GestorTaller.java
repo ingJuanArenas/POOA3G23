@@ -1,6 +1,7 @@
 package patrones;
 
-import excepciones.ValidacionException;
+import excepciones.AlreadyExistsException;
+import excepciones.Validation;
 import modelo.*;
 import modelo.enums.EstadoOrden;
 import modelo.enums.TipoMantenimiento;
@@ -29,11 +30,11 @@ public class GestorTaller {
 
     public Tren registrarTren(String numeroSerie, String modelo) {
         if (numeroSerie == null || numeroSerie.trim().isEmpty()) {
-            throw new ValidacionException("El número de serie es obligatorio");
+            throw new Validation("El número de serie es obligatorio");
         }
         String claveHoy = numeroSerie.trim().toLowerCase() + "|" + LocalDate.now();
         if (trenes.containsKey(claveHoy)) {
-            throw new ValidacionException("El tren ya fue registrado hoy");
+            throw new AlreadyExistsException("El tren ya fue registrado hoy");
         }
         Tren tren = new Tren(numeroSerie.trim(), modelo, LocalDate.now());
         trenes.put(claveHoy, tren);
@@ -55,7 +56,7 @@ public class GestorTaller {
     public void asignarTecnico(OrdenMantenimiento orden, Tecnico tecnico) {
         if (orden.getEspecialidadRequerida() != null &&
                 tecnico.getEspecialidad() != orden.getEspecialidadRequerida()) {
-            throw new ValidacionException("El técnico no tiene la especialidad requerida");
+            throw new Validation("El técnico no tiene la especialidad requerida");
         }
         orden.agregarTecnico(tecnico);
     }
